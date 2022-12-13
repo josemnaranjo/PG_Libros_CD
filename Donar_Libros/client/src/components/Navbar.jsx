@@ -24,7 +24,7 @@ const Navbar = () => {
     return (
       <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a className="navbar-brand" href="/home">
+                <a className="navbar-brand" href="/">
                     Donar Libros
                 </a>
                 <div className="navbar" id="navbarNav">
@@ -37,6 +37,11 @@ const Navbar = () => {
                         <li className="nav-item">
                             <a className="nav-link" href="/login">
                                 Login
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/new-book">
+                                Crear Nuevo Libro
                             </a>
                         </li>
                     </ul>
