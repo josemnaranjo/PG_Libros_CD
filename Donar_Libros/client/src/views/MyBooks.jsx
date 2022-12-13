@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import Navbar from '../components/Navbar';
+import { useNavigate } from 'react-router-dom'
 import { useUser } from '../context/userContext';
 import { getBooksThatInterestAnUser ,getMyBooksThatInterestOthers } from '../services/book.services';
 
@@ -8,6 +9,7 @@ const MyBooks = () => {
     const {user} = useUser();
     const [booksThatInterestUser , setBookThatInterestUser] = useState();
     const [booksThatInterestOthers , setBookThatInterestOthers] = useState();
+    const navigate = useNavigate();
 
 
     const getBooksThatInterestAnUserFromService = async () => {
@@ -35,31 +37,31 @@ const MyBooks = () => {
         getBooksThatInterestAnUserFromService();
         getBooksThatInterestOthersFromService()
     }, []);
+    
     return (
         <div>
             <Navbar/>
             <div className='container d-flex justify-content-evenly'>
 
                 <div>
-                    <h1>Mis libros</h1>
+                    <h1>mis libros que interesan a otros</h1>
                     <ul>
                         {booksThatInterestOthers?.map((book,idx)=>(
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                                 <p>{book.title}</p>
-                                <button className='btn btn-dark'>Aceptar</button>
-                                <button className='btn btn-dark'>Rechazar</button>
+                                <button></button>
                             </li>
                         ))}
                     </ul>
                 </div>
 
                 <div>
-                    <h1>Libros que me interesan</h1>
+                    <h1>libros que me interesan</h1>
                     <ul>
                         {booksThatInterestUser?.map((book,idx)=>(
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                                 <p>{book.title}</p>
-                                <button className='btn btn-dark'>Ver estado</button>
+                                <button className='btn btn-dark'>Ver información</button>
                             </li>
                         ))}
                     </ul>

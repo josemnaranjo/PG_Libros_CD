@@ -10,4 +10,6 @@ export const addBookToInterest = async(bookId,userId) => await axios.post(`http:
 //obtener mis libros que tienen interés de otros
 export const getMyBooksThatInterestOthers = async(userId) => await axios.get(`http://localhost:8000/api/books/find-books-of-interest-other-users/${userId}`)
 //obtener los libros que me interesan
-export const getBooksThatInterestAnUser = async(userId) => await axios.get(`http://localhost:8000/api/books/find-books-of-interest-of-an-user/${userId}`)
+export const getBooksThatInterestAnUser = async(userId) => await axios.get(`http://localhost:8000/api/books/find-books-of-interest-of-an-user/${userId}`);
+//obtener los libros que creó un usuario
+export const getAllBookOfAnUser = async(userId) => await axios.get(`http://localhost:8000/api/books/find-books-of-an-user/${userId}`);

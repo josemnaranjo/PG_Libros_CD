@@ -47,35 +47,27 @@ module.exports.addBookOfInterest = async (req,res) => {
         //obtengo el id del libro que quiero reservar,
         // el id lo obtengo a tráves de los params
         const bookId = req.params.id;
-        const book = await Book.findById(bookId);
-        //obtengo el id del creador del libro
-        const creatorOfTheBookId = book.creatorId;
-        //y agrego el libro interesado a su campo "MyBooksThatInterestOtherUsers"
-
-        await User.findByIdAndUpdate(creatorOfTheBookId,{
-            $push:{
-                myBooksThatInterestOtherUsers:book
-            }
-        })
-
+        
         //obtengo el usuario que solicitó la reserva del libro a través de su
         //id. El que obtengo del userState. Lo paso dentro del body
         const result  = req.body;
-        console.log(result);
-        const userId = result._id
-        // y actualizo lo agrego a su campo "booksImInterested"
-        await User.findByIdAndUpdate(userId,{
-            $push:{
-                booksImInterested:book
-            }
-        },{new:true});
-
+        const userId = result._id;
+        
         //paso el id del solicitante al libro que le interesa
-        await Book.findByIdAndUpdate(bookId,{
-            $push:{
-                interestId:userId,
-            }
-        }); 
+        await Book.findByIdAndUpdate(bookId,{interestId:userId},{new:true});
+        //obtengo el libro actualziado
+        const book = await Book.findById(bookId);
+
+        // //obtengo el id del creador del libro
+        const creatorOfTheBookId = book.creatorId;
+
+        // //y agrego el libro interesado a su campo "MyBooksThatInterestOtherUsers"
+        await User.findByIdAndUpdate(creatorOfTheBookId,{myBooksThatInterestOtherUsers:book },{new:true})
+
+        // y lo agrego a su campo "booksImInterested"
+        await User.findByIdAndUpdate(userId,{booksImInterested:book},{new:true});
+
+         
         res.json({message:"Exito"})
 
     }catch(err){

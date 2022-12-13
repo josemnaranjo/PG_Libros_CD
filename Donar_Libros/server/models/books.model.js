@@ -27,6 +27,7 @@ const BookSchema = new mongoose.Schema({
     },
     interestId:{
         type:String,
+        default:""
     }
 },{timestamps:true});
 
