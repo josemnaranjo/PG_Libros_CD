@@ -61,6 +61,7 @@ module.exports.addBookOfInterest = async (req,res) => {
         //obtengo el usuario que solicitó la reserva del libro a través de su
         //id. El que obtengo del userState. Lo paso dentro del body
         const result  = req.body;
+        console.log(result);
         const userId = result._id
         // y actualizo lo agrego a su campo "booksImInterested"
         await User.findByIdAndUpdate(userId,{

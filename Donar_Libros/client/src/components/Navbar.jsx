@@ -44,6 +44,11 @@ const Navbar = () => {
                                 Crear Nuevo Libro
                             </a>
                         </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/my-books">
+                                Mis Libros
+                            </a>
+                        </li>
                     </ul>
                     </div>
                     <div className='collapse navbar-collapse justify-content-end'>

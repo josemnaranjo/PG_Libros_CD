@@ -5,6 +5,7 @@ import Home from './views/Home';
 import Register from './views/Register';
 import Login from './views/Login';
 import NewBook from './views/NewBook';
+import MyBooks from './views/MyBooks';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/new-book' element={<NewBook/>}/>
+                <Route path='/my-books' element={<MyBooks/>}/>
             </Routes>
         </UserProvider>
     </div>

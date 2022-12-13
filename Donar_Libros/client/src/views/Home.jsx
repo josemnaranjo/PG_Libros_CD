@@ -1,14 +1,18 @@
 import React, {useState,useEffect} from 'react';
 import Navbar from '../components/Navbar';
-import { getAllBooks } from '../services/book.services';
+import { useUser } from '../context/userContext';
+import { useNavigate } from 'react-router-dom';
+import { getAllBooks , addBookToInterest } from '../services/book.services';
 
 const Home = () => {
     const [books,setBooks] = useState([]);
+    const {user} = useUser();
+    const navigate = useNavigate();
 
     const getAllBooksFromService = async () => {
         try{
             const result = await getAllBooks();
-            const aBooks = result.data.allBooks
+            const aBooks = result.data.allBooks;
             setBooks(aBooks);
         }catch(err){
             console.log(err)
@@ -18,6 +22,15 @@ const Home = () => {
     useEffect(() => {
         getAllBooksFromService();
     }, []);
+
+    const addBookToInterestFromService = async (bookId,userId) =>{
+        try{
+            await addBookToInterest(bookId,userId);
+            navigate(`/my-books/${user._id}`)
+        }catch(err){
+            console.log(err)
+        }
+    }
 
 
     return (
@@ -41,7 +54,7 @@ const Home = () => {
                             <td>{book.genre}</td>
                             <td>{book.author}</td>
                             <td>{book.summary}</td>
-                            <button>me interesa</button>
+                            <td><button className='btn btn-dark' onClick={()=>addBookToInterestFromService(book._id,user._id)}>me interesa</button></td>
                         </tr>
                     ))}
                 </tbody>
