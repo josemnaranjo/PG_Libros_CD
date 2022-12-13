@@ -29,6 +29,19 @@ module.exports.createBook = async (req,res) => {
     }
 };
 
+module.exports.getAllBooks = async (req,res) => {
+    try{
+        const allBooks = await Book.find();
+        res.json({allBooks});
+
+    }catch(err){
+        res.status(500).json({
+            message:"No hemos podido obtener los libros",
+            err
+        })
+    }
+}
+
 module.exports.addBookOfInterest = async (req,res) => {
     try{
         //obtengo el id del libro que quiero reservar,
@@ -62,10 +75,6 @@ module.exports.addBookOfInterest = async (req,res) => {
                 interestId:userId,
             }
         }); 
-
-
-
-
         res.json({message:"Exito"})
 
     }catch(err){
