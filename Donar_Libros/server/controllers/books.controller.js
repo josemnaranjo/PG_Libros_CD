@@ -62,10 +62,12 @@ module.exports.addBookOfInterest = async (req,res) => {
         const creatorOfTheBookId = book.creatorId;
 
         // //y agrego el libro interesado a su campo "MyBooksThatInterestOtherUsers"
-        await User.findByIdAndUpdate(creatorOfTheBookId,{myBooksThatInterestOtherUsers:book },{new:true})
+        await User.findByIdAndUpdate(creatorOfTheBookId,{
+            $push:{myBooksThatInterestOtherUsers:book }
+        },{new:true})
 
         // y lo agrego a su campo "booksImInterested"
-        await User.findByIdAndUpdate(userId,{booksImInterested:book},{new:true});
+        await User.findByIdAndUpdate(userId,{ $push: {booksImInterested:book}},{new:true});
 
          
         res.json({message:"Exito"})
