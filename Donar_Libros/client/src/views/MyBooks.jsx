@@ -41,20 +41,7 @@ const MyBooks = () => {
             <div className='container d-flex justify-content-evenly'>
 
                 <div>
-                    <h1>Libros que me interesan</h1>
-                    <ul>
-                        {booksThatInterestUser?.map((book,idx)=>(
-                            <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
-                                <p>{book.title}</p>
-                                <button className='btn btn-dark'>Aceptar</button>
-                                <button className='btn btn-dark'>Rechazar</button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <div>
-                    <h1>Mis solicitudes</h1>
+                    <h1>Mis libros</h1>
                     <ul>
                         {booksThatInterestOthers?.map((book,idx)=>(
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
@@ -65,6 +52,19 @@ const MyBooks = () => {
                         ))}
                     </ul>
                 </div>
+
+                <div>
+                    <h1>Libros que me interesan</h1>
+                    <ul>
+                        {booksThatInterestUser?.map((book,idx)=>(
+                            <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
+                                <p>{book.title}</p>
+                                <button className='btn btn-dark'>Ver estado</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                
             </div>
         </div>
     );

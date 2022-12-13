@@ -26,7 +26,7 @@ const Home = () => {
     const addBookToInterestFromService = async (bookId,userId) =>{
         try{
             await addBookToInterest(bookId,userId);
-            navigate(`/my-books/${user._id}`)
+            navigate(`/my-books`)
         }catch(err){
             console.log(err)
         }
