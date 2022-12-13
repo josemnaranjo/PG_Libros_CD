@@ -10,7 +10,7 @@ module.exports.Register = async(req,res) => {
         const jwtToken = jwt.sign({_id:user._id},process.env.SECRET_KEY)
 
         return res.cookie("usertoken",jwtToken,process.env.SECRET_KEY,{httpOnly:true})
-                .json({message:"Usuario creado con éxito",email:user.email,_id:user._id})
+                .json({message:"",email:user.email,_id:user._id})
     }catch(err){
         res.json({message:"Algo salio mal",errors:err.errors});
     }
@@ -35,7 +35,7 @@ module.exports.Login = async(req,res) => {
         const jwtToken = jwt.sign({id:user._id},process.env.SECRET_KEY);
 
         return res.cookie("usertoken",jwtToken,process.env.SECRET_KEY,{httpOnly:true})
-        .json({message:"Logueado con éxito",email:user.email,_id:user._id})
+        .json({message:"",email:user.email,_id:user._id})
 
     }catch(err){
         res.json({message:"Algo salio mal",errors:err.errors});
