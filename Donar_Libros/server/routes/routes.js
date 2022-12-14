@@ -1,5 +1,6 @@
 const UserController = require('../controllers/user.controller');
 const BookSchema = require('../controllers/books.controller');
+const TradingSchema = require('../controllers/trades.controller')
 const authenticate = require('../config/authenticate');
 
 
@@ -22,5 +23,8 @@ module.exports = app => {
     app.get('/api/books/find-books-of-interest-of-an-user/:id',authenticate,BookSchema.getAllBooksOfInterestOfAnUser);
     app.get('/api/books/find-books-of-interest-other-users/:id',authenticate,BookSchema.getAllBooksThatInterestOthers);
     app.get('/api/books/find-books-of-an-user/:id',authenticate,BookSchema.getAllBooksCreatedByAnUser);
+
+    //TRADES
+    app.post('/api/trade/:id',authenticate,TradingSchema.addToTrade);
 
 }

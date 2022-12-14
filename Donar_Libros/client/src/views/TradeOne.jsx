@@ -1,11 +1,13 @@
 import React, {useEffect,useState} from 'react';
 import Navbar from '../components/Navbar';
-import { useParams } from 'react-router-dom';
+import { useParams , useNavigate } from 'react-router-dom';
 import { getAllBookOfAnUser } from '../services/book.services';
+import { addToTrade } from '../services/trade.services';
 
 const TradeOne = () => {
     const {id,tradeId} = useParams();
     const [books,setBooks] = useState();
+    const navigate = useNavigate();
 
     const getAllBookOfAnUserFromService = async () => {
         try{
@@ -16,6 +18,16 @@ const TradeOne = () => {
             console.log(err)
         }
     };
+    
+    const addToTradeFromServices = async (value) => {
+        try{
+            const result = await addToTrade(tradeId,value);
+            console.log(result)
+
+        }catch(err){
+            console.log(err)
+        }
+    }
 
     useEffect(() => {
         getAllBookOfAnUserFromService();
@@ -30,7 +42,7 @@ const TradeOne = () => {
                     {books?.map((book,idx)=>(
                         <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                             <p>{book.title}</p>
-                            <button className='btn btn-dark'>seleccionar</button>
+                            <button className='btn btn-dark' onClick={() => addToTradeFromServices(book)}>seleccionar</button>
                         </li>
                     ))}
                 </ul>

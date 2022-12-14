@@ -5,13 +5,18 @@ const { Trading } = require('../models/trading.model');
 
 module.exports.addToTrade = async (req,res) => {
     try{
-        //obtengo el id del usuario que creó libro 1
-        const userId = req.params.id
-        const user = await User.findById({_id:userId});
+        //obtengo el id del trade donde está alojado el libro
+        const result = req.params;
+        const tradeId = result.id;
+        //obtengo el libro que quiero pasarle al trade
+        const book = req.body;
+        // console.log(book,tradeId);
 
-        console.log(user)
+        //actualizo el trade con el libro
+        const trade = await Trading.findByIdAndUpdate(tradeId,{book2:book},{new:true})
 
-        res.json()
+        res.json(result);
+        // res.json("hola");
 
     }catch(err){
         res.status(500).json({
