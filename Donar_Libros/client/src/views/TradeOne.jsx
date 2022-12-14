@@ -10,6 +10,7 @@ const TradeOne = () => {
     const getAllBookOfAnUserFromService = async () => {
         try{
             const result = await getAllBookOfAnUser(id);
+            console.log(result.data)
             setBooks(result.data);
         }catch(err){
             console.log(err)
