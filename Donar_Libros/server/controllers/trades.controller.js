@@ -10,13 +10,11 @@ module.exports.addToTrade = async (req,res) => {
         const tradeId = result.id;
         //obtengo el libro que quiero pasarle al trade
         const book = req.body;
-        // console.log(book,tradeId);
 
         //actualizo el trade con el libro
         const trade = await Trading.findByIdAndUpdate(tradeId,{book2:book},{new:true})
 
-        res.json(result);
-        // res.json("hola");
+        res.json(trade);
 
     }catch(err){
         res.status(500).json({
@@ -24,4 +22,24 @@ module.exports.addToTrade = async (req,res) => {
             err
         })
     }
-}
+};
+
+module.exports.getOneTrade = async (req,res) => {
+    try{
+        //obtengo el id del trade donde está alojado el libro
+        const result = req.params;
+        const tradeId = result.id;
+        
+        //actualizo el trade con el libro
+        const trade = await Trading.findById(tradeId)
+
+        res.json(trade);
+
+    }catch(err){
+        res.status(500).json({
+            message:"No hemos podido obtener el trade solicitado",
+            err
+        })
+    }
+};
+

@@ -26,5 +26,7 @@ module.exports = app => {
 
     //TRADES
     app.post('/api/trade/:id',authenticate,TradingSchema.addToTrade);
+    app.get('/api/trade/get-one/:id',authenticate,TradingSchema.getOneTrade);
+    
 
 }

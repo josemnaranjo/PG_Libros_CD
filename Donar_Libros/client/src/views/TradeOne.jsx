@@ -21,9 +21,8 @@ const TradeOne = () => {
     
     const addToTradeFromServices = async (value) => {
         try{
-            const result = await addToTrade(tradeId,value);
-            console.log(result)
-
+            await addToTrade(tradeId,value);
+            navigate(`/one-trade/${tradeId}`);
         }catch(err){
             console.log(err)
         }
