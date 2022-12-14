@@ -6,6 +6,7 @@ import Register from './views/Register';
 import Login from './views/Login';
 import NewBook from './views/NewBook';
 import MyBooks from './views/MyBooks';
+import TradeOne from './views/TradeOne';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/new-book' element={<NewBook/>}/>
                 <Route path='/my-books' element={<MyBooks/>}/>
+                <Route path='/trade/:id' element={<TradeOne/>}/>
             </Routes>
         </UserProvider>
     </div>

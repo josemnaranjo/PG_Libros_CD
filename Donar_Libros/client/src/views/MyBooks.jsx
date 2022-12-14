@@ -32,6 +32,10 @@ const MyBooks = () => {
         }
     };
 
+    const toTradeOne = (value) => {
+        navigate(`/trade/${value}`)
+    }
+
 
     useEffect(() => {
         getBooksThatInterestAnUserFromService();
@@ -49,7 +53,7 @@ const MyBooks = () => {
                         {booksThatInterestOthers?.map((book,idx)=>(
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                                 <p>{book.title}</p>
-                                <button></button>
+                                <button className='btn btn-dark' onClick={()=>toTradeOne(book.interestId)}>Ver informacion</button>
                             </li>
                         ))}
                     </ul>
@@ -61,7 +65,7 @@ const MyBooks = () => {
                         {booksThatInterestUser?.map((book,idx)=>(
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                                 <p>{book.title}</p>
-                                <button className='btn btn-dark'>Ver información</button>
+                                <button className='btn btn-dark' >Ver información</button>
                             </li>
                         ))}
                     </ul>
