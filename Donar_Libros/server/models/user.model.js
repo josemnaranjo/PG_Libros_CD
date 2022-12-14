@@ -29,7 +29,8 @@ const UserSchema = new mongoose.Schema({
     },
     myBooks: [BookSchema],
     booksImInterested: [BookSchema],
-    myBooksThatInterestOtherUsers: [BookSchema]
+    myBooksThatInterestOtherUsers: [BookSchema],
+
 
 },{timestamps:true});
 

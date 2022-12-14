@@ -28,6 +28,10 @@ const BookSchema = new mongoose.Schema({
     interestId:{
         type:String,
         default:""
+    },
+    tradesId: {
+        type:String,
+        default:""
     }
 },{timestamps:true});
 

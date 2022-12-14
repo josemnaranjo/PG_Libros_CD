@@ -2,13 +2,15 @@ import React,{useState,useEffect} from 'react';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../context/userContext';
-import { getBooksThatInterestAnUser ,getMyBooksThatInterestOthers } from '../services/book.services';
+import { getBooksThatInterestAnUser ,getMyBooksThatInterestOthers ,getOneBook } from '../services/book.services';
 
 
 const MyBooks = () => {
     const {user} = useUser();
     const [booksThatInterestUser , setBookThatInterestUser] = useState();
     const [booksThatInterestOthers , setBookThatInterestOthers] = useState();
+    const [tradeId, setTradeId] = useState();
+    const [bookId,setBookId] = useState()
     const navigate = useNavigate();
 
 
@@ -32,8 +34,22 @@ const MyBooks = () => {
         }
     };
 
+    const getOneBookFromService = async (data) => {
+        try{
+            const result = await getOneBook(data);
+            setTradeId(result.data.book.tradesId)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    const setBkId = (value) => {
+        getOneBookFromService(value);
+    }
+
     const toTradeOne = (value) => {
-        navigate(`/trade/${value}`)
+        
+        navigate(`/user/${value}/trade/${tradeId}`)
     }
 
 
@@ -53,7 +69,7 @@ const MyBooks = () => {
                         {booksThatInterestOthers?.map((book,idx)=>(
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                                 <p>{book.title}</p>
-                                <button className='btn btn-dark' onClick={()=>toTradeOne(book.interestId)}>Ver informacion</button>
+                                <button className='btn btn-dark' onMouseOver={setBkId(book._id)} onClick={()=>toTradeOne(book.interestId)}>Ver informacion</button>
                             </li>
                         ))}
                     </ul>

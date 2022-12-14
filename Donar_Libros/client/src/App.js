@@ -18,7 +18,7 @@ function App() {
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/new-book' element={<NewBook/>}/>
                 <Route path='/my-books' element={<MyBooks/>}/>
-                <Route path='/trade/:id' element={<TradeOne/>}/>
+                <Route path='/user/:id/trade/:tradeId' element={<TradeOne/>}/>
             </Routes>
         </UserProvider>
     </div>

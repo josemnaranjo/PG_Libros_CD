@@ -25,8 +25,9 @@ const Home = () => {
 
     const addBookToInterestFromService = async (bookId,userId) =>{
         try{
-            await addBookToInterest(bookId,userId);
-            navigate(`/my-books`)
+            const books = await addBookToInterest(bookId,userId);
+            // console.log(books.data.trading._id)
+            navigate(`/my-books`);
         }catch(err){
             console.log(err)
         }

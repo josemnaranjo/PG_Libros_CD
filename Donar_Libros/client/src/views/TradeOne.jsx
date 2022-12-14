@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getAllBookOfAnUser } from '../services/book.services';
 
 const TradeOne = () => {
-    const {id} = useParams();
+    const {id,tradeId} = useParams();
     const [books,setBooks] = useState();
 
     const getAllBookOfAnUserFromService = async () => {

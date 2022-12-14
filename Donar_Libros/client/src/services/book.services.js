@@ -5,6 +5,8 @@ axios.defaults.withCredentials = true;
 export const createBook = async(creatorId,values) => await axios.post(`http://localhost:8000/api/books/new/${creatorId}`,values);
 //obtener todos los libros
 export const getAllBooks = async() => await axios.get('http://localhost:8000/api/books/get-all');
+//obtene 1 libro
+export const getOneBook = async(id) => await axios.get(`http://localhost:8000/api/books/get-one/${id}`);
 //agregar libro a lista de interesados
 export const addBookToInterest = async(bookId,userId) => await axios.post(`http://localhost:8000/api/books/add-to-interest/${bookId}`,{_id:userId});
 //obtener mis libros que tienen interés de otros

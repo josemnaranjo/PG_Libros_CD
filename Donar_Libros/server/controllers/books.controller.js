@@ -1,5 +1,6 @@
 const { Book } = require('../models/books.model');
 const { User } = require('../models/user.model');
+const { Trading } = require('../models/trading.model');
 
 
 module.exports.createBook = async (req,res) => {
@@ -40,6 +41,20 @@ module.exports.getAllBooks = async (req,res) => {
             err
         })
     }
+};
+
+module.exports.getOneBook = async (req,res) => {
+    try{
+        const bookId = req.params.id;
+        const book = await Book.findById(bookId);
+        res.json({book});
+
+    }catch(err){
+        res.status(500).json({
+            message:"No hemos podido obtener el libro",
+            err
+        })
+    }
 }
 
 module.exports.addBookOfInterest = async (req,res) => {
@@ -67,9 +82,16 @@ module.exports.addBookOfInterest = async (req,res) => {
         },{new:true})
 
         // y lo agrego a su campo "booksImInterested"
-        await User.findByIdAndUpdate(userId,{ $push: {booksImInterested:book}},{new:true});
+        await User.findByIdAndUpdate(userId,{$push: {booksImInterested:book}},{new:true});
 
-         
+        //creo el "trade" con el libro que le interesa al usuario
+        const trade = await Trading.create({book1:book});
+
+        //obtengo el id del trade
+        const tradeId = trade._id;
+        //paso el id del trade al libro que le interesa al usuario
+        await Book.findByIdAndUpdate(bookId,{tradesId:tradeId},{new:true});
+
         res.json({message:"Exito"})
 
     }catch(err){
