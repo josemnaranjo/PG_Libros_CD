@@ -217,21 +217,26 @@ module.exports.bigDelete = async (req,res) => {
         //obtengo el UserTwo y todos los campos
         const userTwo = await User.findById(idUserTwo);
         const userTwoBooksImInterested = userTwo.booksImInterested;
+        const userTwoMyBooks = userTwo.myBooks;
 
         //filtrar arreglos de userOne
         const filterUserOneBooksThatInterestOthers = userOneBooksThatInterestOthers.filter(book => book.id !== idBookOne);
         const filterUserOneMyBooks = userOneMyBooks.filter(book => book.id !== idBookOne);
 
         //filtrar arreglos de userOne
-        const filterUserTwoBooksImInterested = userTwoBooksImInterested.filter(book => book.id !== idBookTwo);
+        const filterUserTwoBooksImInterested = userTwoBooksImInterested.filter(book => book.id !== idBookOne);
+        const filterUserTwoMyBooks = userTwoMyBooks.filter(book => book.id !== idBookTwo);
 
         //actualizar arreglo "booksThatInterestOther" de userOne
-        await User.findByIdAndUpdate(idUserOne,{myBooksThatInterestOthers:filterUserOneBooksThatInterestOthers},{new:true});
+        await User.findByIdAndUpdate(idUserOne,{myBooksThatInterestOtherUsers:filterUserOneBooksThatInterestOthers},{new:true});
         //actualizar arreglo "mybooks" de userOne
         await User.findByIdAndUpdate(idUserOne,{myBooks:filterUserOneMyBooks},{new:true});
 
         //actualizar arreglo "booksImInterested" de userOne
         await User.findByIdAndUpdate(idUserTwo,{booksImInterested:filterUserTwoBooksImInterested},{new:true});
+
+        //actualizar arreglo "mybooks" de userTwo
+        await User.findByIdAndUpdate(idUserTwo,{myBooks:filterUserTwoMyBooks},{new:true});
 
         //borro los libros
         await Book.findByIdAndDelete(idBookOne);
