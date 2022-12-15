@@ -68,7 +68,7 @@ module.exports.addBookOfInterest = async (req,res) => {
         const result  = req.body;
         const userId = result._id;
         
-        //paso el id del solicitante al libro que le interesa
+        //paso el id del solicitante al libro que le interesa y el cambio el status a reservado
         await Book.findByIdAndUpdate(bookId,{interestId:userId},{new:true});
         //obtengo el libro actualziado
         const book = await Book.findById(bookId);
@@ -82,7 +82,7 @@ module.exports.addBookOfInterest = async (req,res) => {
         },{new:true})
 
         // y lo agrego a su campo "booksImInterested"
-        await User.findByIdAndUpdate(userId,{$push: {booksImInterested:book}},{new:true});
+        const user = await User.findByIdAndUpdate(userId,{$push: {booksImInterested:book}},{new:true});
 
         //creo el "trade" con el libro que le interesa al usuario
         const trade = await Trading.create({book1:book});
@@ -92,7 +92,7 @@ module.exports.addBookOfInterest = async (req,res) => {
         //paso el id del trade al libro que le interesa al usuario
         await Book.findByIdAndUpdate(bookId,{tradesId:tradeId},{new:true});
 
-        res.json({message:"Exito"})
+        res.json({message:"Exito",user:user})
 
     }catch(err){
         res.status(500).json({

@@ -32,7 +32,7 @@ const BookSchema = new mongoose.Schema({
     tradesId: {
         type:String,
         default:""
-    }
+    },
 },{timestamps:true});
 
 

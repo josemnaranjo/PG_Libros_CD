@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import { useUser } from '../context/userContext';
 import { useNavigate } from 'react-router-dom';
 import { getAllBooks , addBookToInterest } from '../services/book.services';
-/* import { simplePut } from '../services/simplePut'; */
+
 
 const Home = () => {
     const [books,setBooks] = useState([]);
@@ -24,28 +24,25 @@ const Home = () => {
         getAllBooksFromService();
     }, []);
 
+    // const addBookToInterestFromService = async (bookId,userId) =>{
+    //     try{
+    //         await addBookToInterest(bookId,userId);
+    //         navigate(`/my-books`);
+    //     }catch(err){
+    //         console.log(err)
+    //     }
+    // }
     const addBookToInterestFromService = async (bookId,userId) =>{
         try{
-            await addBookToInterest(bookId,userId);
-            navigate(`/my-books`);
-        }catch(err){
-            console.log(err)
-        }
-    }
-  /*   const addBookToInterestFromService = async (bookId,userId) =>{
-        try{
-            await addBookToInterest(bookId,userId)
-            setUser({...user});
+            const response = await addBookToInterest(bookId,userId)
+            setUser(response.data.user);
             
-            const response = await simplePut(`/api/user/${user._id}`,user);
-            console.log(response)
             navigate(`/my-books`);
         }catch(err){
             console.log(err)
         }
-    } */
-
-   
+    };
+    
     const renderBtn = (book) =>{
 
         const aux = user?.booksImInterested.map(book=> book._id).map(libro=>libro.includes(book._id))
@@ -61,7 +58,7 @@ const Home = () => {
     return (
         <div>
             <Navbar/>
-            <h1>Libros disponibles</h1>
+            <h1>Libros disponibles para intercambio</h1>
             <table className='table'>
                 <thead>
                     <tr>
