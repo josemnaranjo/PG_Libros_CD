@@ -60,8 +60,8 @@ module.exports.getAll = (request, response) => {
 module.exports.getUser = async(req,res) => {
     try{
         const {id}=req.params
-        const {email,firstName,lastName,_id,admin,myBooksThatInterestOtherUsers, booksImInterested} = await User.findById(id).exec();
-        res.json({email,firstName,lastName,_id,admin,myBooksThatInterestOtherUsers, booksImInterested})
+        const {email,firstName,lastName,_id,admin,myBooksThatInterestOtherUsers, booksImInterested , myBooks} = await User.findById(id).exec();
+        res.json({email,firstName,lastName,_id,admin,myBooksThatInterestOtherUsers, booksImInterested, myBooks})
     }catch(err){
         return{success:false,data:err.message}
     }

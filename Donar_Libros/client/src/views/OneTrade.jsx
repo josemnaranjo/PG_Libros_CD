@@ -1,6 +1,6 @@
 import React, {useState , useEffect} from 'react';
 import Navbar from '../components/Navbar';
-import { useParams } from 'react-router-dom';
+import { useParams ,useNavigate } from 'react-router-dom';
 import { getOneTrade } from '../services/trade.services';
 import { bigDelete } from '../services/book.services';
 import { getUser } from '../services/user.services';
@@ -15,6 +15,7 @@ const OneTrade = () => {
     const [userTwoId,setUserTwoId] = useState();
     const [userEmail,setUserEmail] = useState();
     const {tradeId} = useParams();
+    const navigate = useNavigate();
 
     const getOneTradeFromServices = async (value) => {
         try{
@@ -44,7 +45,7 @@ const OneTrade = () => {
         try{
             const values = {idBookOne:bookOneId,idBookTwo:bookTwoId,idUserOne:userOneId,idUserTwo:userTwoId};
             await bigDelete(tradeId,values);
-            
+            navigate('/');
         }catch(err){
             console.log(err)
         }

@@ -2,32 +2,29 @@ import React,{useState,useEffect} from 'react';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../context/userContext';
-import { getBooksThatInterestAnUser ,getMyBooksThatInterestOthers ,getOneBook } from '../services/book.services';
+import { getMyBooksThatInterestOthers ,getOneBook } from '../services/book.services';
+import { getUser } from '../services/user.services';
 
 
 const MyBooks = () => {
     const {user} = useUser();
-    const [booksThatInterestUser , setBookThatInterestUser] = useState();
+    const [myBooks,setMyBooks] = useState();
     const [booksThatInterestOthers , setBookThatInterestOthers] = useState();
     const [tradeId, setTradeId] = useState();
-    const [bookId,setBookId] = useState();
     const navigate = useNavigate();
 
-
-    const getBooksThatInterestAnUserFromService = async () => {
+    const getBooksOfUserFromService = async () => {
         try{
-            const result = await getBooksThatInterestAnUser(user._id);
-            console.log("Libros que interesan al usuario " ,result.data);
-            setBookThatInterestUser(result.data);
+            const result = await getUser(user._id);
+            setMyBooks(result.data.myBooks);
         }catch(err){
             console.log(err)
         }
-    };
+    }
 
     const getBooksThatInterestOthersFromService = async () => {
         try{
             const result = await getMyBooksThatInterestOthers(user._id);
-            console.log("Libros del usuario que interesan a otros ", result.data);
             setBookThatInterestOthers(result.data)
         }catch(err){
             console.log(err)
@@ -54,8 +51,9 @@ const MyBooks = () => {
 
 
     useEffect(() => {
-        getBooksThatInterestAnUserFromService();
-        getBooksThatInterestOthersFromService()
+
+        getBooksThatInterestOthersFromService();
+        getBooksOfUserFromService() 
     }, []);
     
     return (
@@ -64,10 +62,11 @@ const MyBooks = () => {
             <div className='container d-flex justify-content-evenly'>
 
                 <div>
-                    <h1>mis libros que interesan a otros</h1>
+                    <h1>mis libros que interesan a otros usuarios</h1>
                     <ul>
                         {booksThatInterestOthers?.map((book,idx)=>(
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
+                                <p>{idx+1}</p>
                                 <p>{book.title}</p>
                                 <button className='btn btn-dark' onMouseOver={()=>setBkId(book._id)} onClick={()=>toTradeOne(book.interestId)}>Ver informacion</button>
                             </li>
@@ -76,12 +75,13 @@ const MyBooks = () => {
                 </div>
 
                 <div>
-                    <h1>libros que me interesan</h1>
+                    <h1>mis libros</h1>
                     <ul>
-                        {booksThatInterestUser?.map((book,idx)=>(
+                        {myBooks?.map((book,idx)=>(
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                                 <p>{book.title}</p>
-                                <button className='btn btn-dark' >Ver información</button>
+                                <p>{book.author}</p>
+                                <button className='btn btn-dark'>Editar informacion</button>
                             </li>
                         ))}
                     </ul>
