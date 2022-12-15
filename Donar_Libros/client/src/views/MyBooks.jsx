@@ -20,7 +20,7 @@ const MyBooks = () => {
         }catch(err){
             console.log(err)
         }
-    }
+    };
 
     const getBooksThatInterestOthersFromService = async () => {
         try{
@@ -38,20 +38,19 @@ const MyBooks = () => {
         }catch(err){
             console.log(err)
         }
-    }
+    };
 
     const setBkId = (value) => {
         getOneBookFromService(value);
-    }
+    };
 
     const toTradeOne = (value) => {
         
         navigate(`/user/${value}/trade/${tradeId}`)
-    }
+    };
 
 
     useEffect(() => {
-
         getBooksThatInterestOthersFromService();
         getBooksOfUserFromService() 
     }, []);
@@ -80,7 +79,6 @@ const MyBooks = () => {
                         {myBooks?.map((book,idx)=>(
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                                 <p>{book.title}</p>
-                                <p>{book.author}</p>
                                 <button className='btn btn-dark'>Editar informacion</button>
                             </li>
                         ))}
