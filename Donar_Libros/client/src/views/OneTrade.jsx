@@ -66,6 +66,11 @@ const OneTrade = () => {
                 <button className='btn btn-dark' onClick={()=> getUserFromService()}>Ver información</button>
                 {userEmail && <p>{userEmail}</p>}
             </div>
+
+            <div>
+                <button className='btn btn-dark'>Cerrar intercambio</button>
+                <button className='btn btn-dark'>Rechazar intercambio</button>
+            </div>
         </div>
     );
 }

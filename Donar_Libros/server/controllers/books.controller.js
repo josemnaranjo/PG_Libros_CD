@@ -200,3 +200,52 @@ module.exports.deleteBookUserCreator = async (req,res) => {
         })
     }
 };
+
+module.exports.bigDelete = async (req,res) => {
+    try{
+        //obtengo el id del trade
+        const tradeId = req.params.id;
+
+        //obtengo los id's de los usuarios y los libros desde el body
+        const { idBookOne , idBookTwo , idUserOne , idUserTwo} = req.body;
+
+        //obtengo el UserOne y todos los campos necesarios
+        const userOne = await User.findById(idUserOne);
+        const userOneBooksThatInterestOthers = userOne.myBooksThatInterestOtherUsers;
+        const userOneMyBooks = userOne.myBooks;
+
+        //obtengo el UserTwo y todos los campos
+        const userTwo = await User.findById(idUserTwo);
+        const userTwoBooksImInterested = userTwo.booksImInterested;
+
+        //filtrar arreglos de userOne
+        const filterUserOneBooksThatInterestOthers = userOneBooksThatInterestOthers.filter(book => book.id !== idBookOne);
+        const filterUserOneMyBooks = userOneMyBooks.filter(book => book.id !== idBookOne);
+
+        //filtrar arreglos de userOne
+        const filterUserTwoBooksImInterested = userTwoBooksImInterested.filter(book => book.id !== idBookTwo);
+
+        //actualizar arreglo "booksThatInterestOther" de userOne
+        await User.findByIdAndUpdate(idUserOne,{myBooksThatInterestOthers:filterUserOneBooksThatInterestOthers},{new:true});
+        //actualizar arreglo "mybooks" de userOne
+        await User.findByIdAndUpdate(idUserOne,{myBooks:filterUserOneMyBooks},{new:true});
+
+        //actualizar arreglo "booksImInterested" de userOne
+        await User.findByIdAndUpdate(idUserTwo,{booksImInterested:filterUserTwoBooksImInterested},{new:true});
+
+        //borro los libros
+        await Book.findByIdAndDelete(idBookOne);
+        await Book.findByIdAndDelete(idBookTwo);
+
+        //borrar trade
+        await Trading.findByIdAndDelete(tradeId);
+
+        res.json({message:"Exito"});
+
+    }catch(err){
+        res.status(500).json({
+            message:"No hemos podido eliminar los libros",
+            err
+        })
+    }
+}

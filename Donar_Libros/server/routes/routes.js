@@ -19,10 +19,11 @@ module.exports = app => {
     app.get('/api/books/get-all',authenticate,BookSchema.getAllBooks);
     app.get('/api/books/get-one/:id',authenticate,BookSchema.getOneBook);
     app.post('/api/books/add-to-interest/:id',authenticate,BookSchema.addBookOfInterest);
-    app.delete('/api/books/delete/:id',authenticate,BookSchema.deleteBookUserCreator);
+    // app.delete('/api/books/delete/:id',authenticate,BookSchema.deleteBookUserCreator);
     app.get('/api/books/find-books-of-interest-of-an-user/:id',authenticate,BookSchema.getAllBooksOfInterestOfAnUser);
     app.get('/api/books/find-books-of-interest-other-users/:id',authenticate,BookSchema.getAllBooksThatInterestOthers);
     app.get('/api/books/find-books-of-an-user/:id',authenticate,BookSchema.getAllBooksCreatedByAnUser);
+    app.delete('/api/books/trade/big-delete/:id',authenticate,BookSchema.bigDelete);
 
     //TRADES
     app.post('/api/trade/:id',authenticate,TradingSchema.addToTrade);
