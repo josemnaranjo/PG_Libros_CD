@@ -223,7 +223,7 @@ module.exports.bigDelete = async (req,res) => {
         const filterUserOneBooksThatInterestOthers = userOneBooksThatInterestOthers.filter(book => book.id !== idBookOne);
         const filterUserOneMyBooks = userOneMyBooks.filter(book => book.id !== idBookOne);
 
-        //filtrar arreglos de userOne
+        //filtrar arreglos de userTwo
         const filterUserTwoBooksImInterested = userTwoBooksImInterested.filter(book => book.id !== idBookOne);
         const filterUserTwoMyBooks = userTwoMyBooks.filter(book => book.id !== idBookTwo);
 

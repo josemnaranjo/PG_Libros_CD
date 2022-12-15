@@ -20,7 +20,7 @@ function App() {
                 <Route path='/new-book' element={<NewBook/>}/>
                 <Route path='/my-books' element={<MyBooks/>}/>
                 <Route path='/user/:id/trade/:tradeId' element={<TradeOne/>}/>
-                <Route path='/one-trade/:id' element={<OneTrade/>}/>
+                <Route path='/one-trade/:tradeId' element={<OneTrade/>}/>
             </Routes>
         </UserProvider>
     </div>
