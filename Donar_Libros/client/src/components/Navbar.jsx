@@ -25,28 +25,28 @@ const Navbar = () => {
       <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a className="navbar-brand" href="/">
-                    Donar Libros
+                    InterBook
                 </a>
                 <div className="navbar" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
                             <a className="nav-link" href="/register">
-                                Register
+                                register
                             </a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/login">
-                                Login
+                                login
                             </a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/new-book">
-                                Crear Nuevo Libro
+                                crear nuevo libro
                             </a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/my-books">
-                                Mis Libros / Solicitudes
+                                mis libros y solicitudes
                             </a>
                         </li>
                     </ul>

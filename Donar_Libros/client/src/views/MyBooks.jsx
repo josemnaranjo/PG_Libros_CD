@@ -10,7 +10,7 @@ const MyBooks = () => {
     const [booksThatInterestUser , setBookThatInterestUser] = useState();
     const [booksThatInterestOthers , setBookThatInterestOthers] = useState();
     const [tradeId, setTradeId] = useState();
-    const [bookId,setBookId] = useState()
+    const [bookId,setBookId] = useState();
     const navigate = useNavigate();
 
 
@@ -69,7 +69,7 @@ const MyBooks = () => {
                         {booksThatInterestOthers?.map((book,idx)=>(
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                                 <p>{book.title}</p>
-                                <button className='btn btn-dark' onMouseOver={setBkId(book._id)} onClick={()=>toTradeOne(book.interestId)}>Ver informacion</button>
+                                <button className='btn btn-dark' onMouseOver={()=>setBkId(book._id)} onClick={()=>toTradeOne(book.interestId)}>Ver informacion</button>
                             </li>
                         ))}
                     </ul>
