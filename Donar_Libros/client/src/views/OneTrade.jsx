@@ -2,7 +2,7 @@ import React, {useState , useEffect} from 'react';
 import Navbar from '../components/Navbar';
 import { useParams ,useNavigate } from 'react-router-dom';
 import { getOneTrade } from '../services/trade.services';
-import { bigDelete } from '../services/book.services';
+import { bigDelete ,rejectTrade } from '../services/book.services';
 import { getUser } from '../services/user.services';
 
 
@@ -49,6 +49,16 @@ const OneTrade = () => {
         }catch(err){
             console.log(err)
         }
+    };
+
+    const rejectT = async () => {
+        try{
+            const values = {idBookOne:bookOneId,idBookTwo:bookTwoId,idUserOne:userOneId,idUserTwo:userTwoId};
+            await rejectTrade(tradeId,values);
+            navigate('/');
+        }catch(err){
+            console.log(err)
+        }
     }
 
     useEffect(() => {
@@ -87,7 +97,7 @@ const OneTrade = () => {
 
             <div>
                 <button className='btn btn-dark' onClick={()=>closeTrade()}>Cerrar intercambio</button>
-                <button className='btn btn-dark'>Rechazar intercambio</button>
+                <button className='btn btn-dark' onClick={()=>rejectT()}>Rechazar intercambio</button>
             </div>
         </div>
     );

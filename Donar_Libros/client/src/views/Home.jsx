@@ -24,25 +24,16 @@ const Home = () => {
         getAllBooksFromService();
     }, []);
 
-    // const addBookToInterestFromService = async (bookId,userId) =>{
-    //     try{
-    //         await addBookToInterest(bookId,userId);
-    //         navigate(`/my-books`);
-    //     }catch(err){
-    //         console.log(err)
-    //     }
-    // }
     const addBookToInterestFromService = async (bookId,userId) =>{
         try{
             const response = await addBookToInterest(bookId,userId)
             setUser(response.data.user);
-            
             navigate(`/my-books`);
         }catch(err){
             console.log(err)
         }
     };
-    
+
     const renderBtn = (book) =>{
 
         const aux = user?.booksImInterested.map(book=> book._id).map(libro=>libro.includes(book._id))

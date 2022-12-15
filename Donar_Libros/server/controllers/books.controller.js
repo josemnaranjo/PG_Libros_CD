@@ -253,4 +253,54 @@ module.exports.bigDelete = async (req,res) => {
             err
         })
     }
+};
+
+module.exports.rejectTrade = async (req,res) => {
+    try{
+        //obtengo el id del trade
+        const tradeId = req.params.id;
+
+        //obtengo los id's de los usuarios y los libros desde el body
+        const { idBookOne , idBookTwo , idUserOne , idUserTwo} = req.body;
+
+        //obtengo el UserOne y todos los campos necesarios
+        const userOne = await User.findById(idUserOne);
+        const userOneBooksThatInterestOthers = userOne.myBooksThatInterestOtherUsers;
+        const userOneBooksOfInterest = userOne.booksImInterested;
+
+        //obtengo el UserTwo y todos los campos
+        const userTwo = await User.findById(idUserTwo);
+        const userTwoBooksImInterested = userTwo.booksImInterested;
+        const userTwoBooksOfInterest = userTwo.booksImInterested;
+
+        //filtrar arreglos de userOne
+        const filterUserOneBooksThatInterestOthers = userOneBooksThatInterestOthers.filter(book => book.id !== idBookOne);
+        const filterUserBookOfInterest = userOneBooksOfInterest.filter(book => book.id !== idBookTwo);
+
+        //filtrar arreglos de userTwo
+        const filterUserTwoBooksImInterested = userTwoBooksImInterested.filter(book => book.id !== idBookOne);
+        const filterUserTwoBookOfInterest = userTwoBooksOfInterest.filter(book => book.id !== idBookOne);
+
+        //actualizar arreglo "booksThatInterestOther" de userOne
+        await User.findByIdAndUpdate(idUserOne,{myBooksThatInterestOtherUsers:filterUserOneBooksThatInterestOthers},{new:true});
+        //actualizar arreglo "mybooks" de userOne
+        await User.findByIdAndUpdate(idUserOne,{booksImInterested:filterUserBookOfInterest},{new:true});
+
+        //actualizar arreglo "booksImInterested" de userOne
+        await User.findByIdAndUpdate(idUserTwo,{booksImInterested:filterUserTwoBooksImInterested},{new:true});
+
+        //actualizar arreglo "mybooks" de userTwo
+        await User.findByIdAndUpdate(idUserTwo,{booksImInterested:filterUserTwoBookOfInterest},{new:true});
+
+        //borrar trade
+        await Trading.findByIdAndDelete(tradeId);
+
+        res.json({message:"Exito"});
+
+    }catch(err){
+        res.status(500).json({
+            message:"No hemos podido eliminar los libros",
+            err
+        })
+    }
 }

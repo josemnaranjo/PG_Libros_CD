@@ -16,4 +16,6 @@ export const getBooksThatInterestAnUser = async(userId) => await axios.get(`http
 //obtener los libros que creó un usuario
 export const getAllBookOfAnUser = async(userId) => await axios.get(`http://localhost:8000/api/books/find-books-of-an-user/${userId}`);
 //bigDelete : borra trade exitoso, los libros que estaban comprometidos y también en los lugares correspondientes dentro de la coleccion users
-export const bigDelete = async(tradeId,values) => await axios.post(`http://localhost:8000/api/books/trade/big-delete/${tradeId}`,values)
+export const bigDelete = async(tradeId,values) => await axios.post(`http://localhost:8000/api/books/trade/big-delete/${tradeId}`,values);
+//rechazar transacción
+export const rejectTrade = async(tradeId,values) => await axios.post(`http://localhost:8000/api/trade/reject/${tradeId}`,values);
