@@ -60,9 +60,15 @@ module.exports.getAll = (request, response) => {
 module.exports.getUser = async(req,res) => {
     try{
         const {id}=req.params
-        const {email,firstName,lastName,_id,admin} = await User.findById(id).exec();
-        res.json({email,firstName,lastName,_id,admin})
+        const {email,firstName,lastName,_id,admin,myBooksThatInterestOtherUsers, booksImInterested} = await User.findById(id).exec();
+        res.json({email,firstName,lastName,_id,admin,myBooksThatInterestOtherUsers, booksImInterested})
     }catch(err){
         return{success:false,data:err.message}
     }
 }
+
+/* module.exports.putUser = (req, res) => {
+    User.findByIdAndUpdate({_id: req.params.id},req.body)
+        .then(edUser => res.json({message:"", user:edUser}))
+        .catch(err=>res.json({message:"Ha ocurrido un error",error:err.errors}));
+}; */

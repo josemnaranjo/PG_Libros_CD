@@ -3,10 +3,11 @@ import Navbar from '../components/Navbar';
 import { useUser } from '../context/userContext';
 import { useNavigate } from 'react-router-dom';
 import { getAllBooks , addBookToInterest } from '../services/book.services';
+/* import { simplePut } from '../services/simplePut'; */
 
 const Home = () => {
     const [books,setBooks] = useState([]);
-    const {user} = useUser();
+    const {user, setUser} = useUser();
     const navigate = useNavigate();
 
     const getAllBooksFromService = async () => {
@@ -25,14 +26,38 @@ const Home = () => {
 
     const addBookToInterestFromService = async (bookId,userId) =>{
         try{
-            const books = await addBookToInterest(bookId,userId);
+            await addBookToInterest(bookId,userId);
             navigate(`/my-books`);
         }catch(err){
             console.log(err)
         }
     }
+  /*   const addBookToInterestFromService = async (bookId,userId) =>{
+        try{
+            await addBookToInterest(bookId,userId)
+            setUser({...user});
+            
+            const response = await simplePut(`/api/user/${user._id}`,user);
+            console.log(response)
+            navigate(`/my-books`);
+        }catch(err){
+            console.log(err)
+        }
+    } */
 
+   
+    const renderBtn = (book) =>{
 
+        const aux = user?.booksImInterested.map(book=> book._id).map(libro=>libro.includes(book._id))
+        if(user){
+            if(aux.includes(true)){
+                return(<><button  className="btn btn-danger">Pendiente</button></>)
+            }else{
+                return(<><button type="button" className="btn btn-warning" onClick={()=>addBookToInterestFromService(book._id,user._id)}>Me interesa</button></>)
+            }
+        }
+    };
+    
     return (
         <div>
             <Navbar/>
@@ -49,12 +74,12 @@ const Home = () => {
                 </thead>
                 <tbody>
                     {books?.map((book,idx)=>(
-                        <tr key={idx}>
+                        <tr key={idx} className={user?._id===book.creatorId? "none":""} >
                             <td>{book.title}</td>
                             <td>{book.genre}</td>
                             <td>{book.author}</td>
                             <td>{book.summary}</td>
-                            <td><button className='btn btn-dark' onClick={()=>addBookToInterestFromService(book._id,user._id)}>me interesa</button></td>
+                            <td>{renderBtn(book)}{/* {<button className='btn btn-dark' onClick={()=>addBookToInterestFromService(book._id,user._id)}>me interesa</button>} */}</td>
                         </tr>
                     ))}
                 </tbody>

@@ -12,6 +12,7 @@ module.exports = app => {
     app.post("/api/logout",UserController.Logout);
     app.get("/api/users",authenticate,UserController.getAll);
     app.get("/api/user/:id",authenticate,UserController.getUser);
+    /* app.put("/api/user/:id",UserController.putUser) */
 
 
      //BOOKS
