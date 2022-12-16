@@ -42,7 +42,8 @@ const MyBooks = () => {
 
     const deleteOneBookFromServices = async (data) => {
         try{
-            await deleteOneBook(data,user._id)
+            await deleteOneBook(data,user._id);
+            navigate('/my-books')
         }catch(err){
             console.log(err)
         }
@@ -53,7 +54,6 @@ const MyBooks = () => {
     };
 
     const toTradeOne = (value) => {
-        
         navigate(`/user/${value}/trade/${tradeId}`)
     };
 
