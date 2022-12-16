@@ -22,7 +22,7 @@ module.exports.Login = async(req,res) => {
         const user = await User.findOneAndUpdate({email:req.body.email},{admin:admin},{new:true});
 
         if(user===null){
-            res.json({errors:{error:{message:"El usuario no existe en la base de datos"}}})
+            return  res.json({errors:{error:{message:"El usuario no existe en la base de datos"}}})
         }
 
 

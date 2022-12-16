@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../context/userContext';
-import { getMyBooksThatInterestOthers ,getOneBook } from '../services/book.services';
+import { getMyBooksThatInterestOthers ,getOneBook, deleteOneBook } from '../services/book.services';
 import { getUser } from '../services/user.services';
 
 
@@ -39,6 +39,14 @@ const MyBooks = () => {
             console.log(err)
         }
     };
+
+    const deleteOneBookFromServices = async (data) => {
+        try{
+            await deleteOneBook(data,user._id)
+        }catch(err){
+            console.log(err)
+        }
+    }
 
     const setBkId = (value) => {
         getOneBookFromService(value);
@@ -80,6 +88,7 @@ const MyBooks = () => {
                             <li key={idx} className="list-group-item d-flex justify-content-between align-items-center">
                                 <p>{book.title}</p>
                                 <button className='btn btn-dark'>Editar informacion</button>
+                                <button className='btn btn-danger' onClick={()=>deleteOneBookFromServices(book._id)}>Borrar</button>
                             </li>
                         ))}
                     </ul>

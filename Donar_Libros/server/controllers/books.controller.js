@@ -303,4 +303,64 @@ module.exports.rejectTrade = async (req,res) => {
             err
         })
     }
+};
+
+module.exports.deleteOneBook = async (req,res) => {
+    try{
+        //obtengo id del libro a borrar
+        const bookId = req.params.id;
+        //obtengo el id del usuario dueño del libro
+        const result  = req.body;
+        const userOneId = result._id;
+
+
+        //obtengo el usuario 
+        const user = await User.findById(userOneId);
+        //obtengo el array myBooks 
+        const userOneBooks = user.myBooks;
+        //obtengo el array myBooksThatInterestOthers
+        const userOneMyBooksThatInterestOther = user.myBooksThatInterestOtherUsers;
+        
+        //obtengo libro que quiero borrar del array userOneMyBooksThatInterestOther
+        const bookToDeleteInUserTwo = userOneMyBooksThatInterestOther.filter(book => book.id == bookId);
+        //obtengo el id del userTwo
+        const userTwoId = bookToDeleteInUserTwo[0].interestId;
+    
+
+        //obtengo el arreglo booksImInterested de userTwo
+        const userTwo = await User.findById(userTwoId);
+        const userTwoBooksImInterested = userTwo.booksImInterested;
+        //filtro el arreglo
+        const filterUserTwoBooksImInterested = userTwoBooksImInterested.filter(book => book.id !== bookId);
+
+        //actualizo el arrelgo del userTwo
+        await User.findByIdAndUpdate(userTwoId,{booksImInterested:filterUserTwoBooksImInterested},{new:true});
+
+        //filtro el array "myBooks" del userOne
+        const filterUserOneBooks = userOneBooks.filter(book => book.id !== bookId);
+        //actualizo el arreglo myBooks del userOne
+        await User.findByIdAndUpdate(userOneId,{myBooks:filterUserOneBooks},{new:true});
+
+        //filtro el array "myBooksThatInterestOthers" del userOne
+        const filterUserOneMyBooksThatInterestOthers = userOneMyBooksThatInterestOther.filter(book=> book.id !== bookId);
+        //actualizo el arreglo "myBooksThatInterestOthers" del userOne
+        await User.findByIdAndUpdate(userOneId,{myBooksThatInterestOtherUsers:filterUserOneMyBooksThatInterestOthers},{new:true});
+
+        //obtengo el libro a borrar
+        const book = await Book.findById(bookId);
+        //obtengo el id del trade en el que está
+        const tradeId = book.tradesId;
+        
+
+        //borro el libro 
+        await Book.findByIdAndDelete(bookId);
+        //borro el trade donde esta
+        await Trading.findByIdAndDelete(tradeId);
+
+    }catch(err){
+        res.status(500).json({
+            message:"No hemos podido eliminar el libro",
+            err
+        })
+    }
 }

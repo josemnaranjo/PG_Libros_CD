@@ -24,6 +24,7 @@ module.exports = app => {
     app.get('/api/books/find-books-of-interest-other-users/:id',authenticate,BookSchema.getAllBooksThatInterestOthers);
     app.get('/api/books/find-books-of-an-user/:id',authenticate,BookSchema.getAllBooksCreatedByAnUser);
     app.post('/api/books/trade/big-delete/:id',authenticate,BookSchema.bigDelete);
+    app.post('/api/books/delete-one/:id',authenticate,BookSchema.deleteOneBook);
     app.post('/api/trade/reject/:id',authenticate,BookSchema.rejectTrade);
 
     //TRADES

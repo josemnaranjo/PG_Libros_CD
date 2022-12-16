@@ -19,3 +19,5 @@ export const getAllBookOfAnUser = async(userId) => await axios.get(`http://local
 export const bigDelete = async(tradeId,values) => await axios.post(`http://localhost:8000/api/books/trade/big-delete/${tradeId}`,values);
 //rechazar transacción
 export const rejectTrade = async(tradeId,values) => await axios.post(`http://localhost:8000/api/trade/reject/${tradeId}`,values);
+//borrar un libro
+export const deleteOneBook = async(bookId,userOneId) => await axios.post(`http://localhost:8000/api/books/delete-one/${bookId}`,{_id:userOneId});
